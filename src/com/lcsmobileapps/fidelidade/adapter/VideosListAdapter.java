@@ -1,4 +1,4 @@
-package com.lcsmobileapps.tvb.adapter;
+package com.lcsmobileapps.fidelidade.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,12 +11,12 @@ import android.widget.TextView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
-import com.lcsmobileapps.tvb.R;
+import com.lcsmobileapps.fidelidade.R;
 
 public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailView.OnInitializedListener{
 
 	private Context ctx;
-	
+	public final static String KEY = "AIzaSyCwKikt42UWCwSLAjiXqTFCo_DXhHVmaic";
 	private class ViewHolder {
 		YouTubeThumbnailView imageView;
 		TextView txtName;
@@ -79,7 +79,7 @@ public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailVi
 	@Override
 	public void onInitializationSuccess(YouTubeThumbnailView thumbnailView,
 		      YouTubeThumbnailLoader thumbnailLoader) {
-		thumbnailLoader.setVideo("hYcPcEM8FyY");
+		thumbnailLoader.setVideo("VbVAUMcNslc");
 		
 	}
 	

@@ -1,4 +1,4 @@
-package com.lcsmobileapps.tvb.dummy;
+package com.lcsmobileapps.fidelidade.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

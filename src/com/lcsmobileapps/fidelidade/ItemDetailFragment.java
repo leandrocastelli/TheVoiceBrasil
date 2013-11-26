@@ -1,17 +1,20 @@
-package com.lcsmobileapps.tvb;
+package com.lcsmobileapps.fidelidade;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import static com.lcsmobileapps.fidelidade.adapter.VideosListAdapter.KEY;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.android.youtube.player.YouTubePlayer.OnInitializedListener;
 import com.google.android.youtube.player.YouTubePlayer.Provider;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.lcsmobileapps.tvb.dummy.DummyContent;
+import com.lcsmobileapps.fidelidade.dummy.DummyContent;
+
 
 /**
  * A fragment representing a single Item detail screen. This fragment is either
@@ -41,23 +44,17 @@ public class ItemDetailFragment extends Fragment implements OnInitializedListene
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-	
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_item_detail,
-				container, false);
-
-		  YouTubePlayerSupportFragment youTubePlayerFragment =
-			        (YouTubePlayerSupportFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
-			  
-		youTubePlayerFragment.initialize("AIzaSyCwKikt42UWCwSLAjiXqTFCo_DXhHVmaic", this);
-
-		return rootView;
-	}
-
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		
+		View view = (View)inflater.inflate(R.layout.fragment_item_detail, container,false);
+		YouTubePlayerSupportFragment youTubePlayerFragment =
+		        (YouTubePlayerSupportFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
+		    youTubePlayerFragment.initialize(KEY, this);
+		    return view;
+	}	
 	@Override
 	public void onInitializationFailure(Provider arg0,
 			YouTubeInitializationResult arg1) {
@@ -69,7 +66,7 @@ public class ItemDetailFragment extends Fragment implements OnInitializedListene
 	  public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player,
 	      boolean wasRestored) {
 	    if (!wasRestored) {
-	      player.cueVideo("uUUoCp1jQfw");
+	      player.cueVideo("VbVAUMcNslc");
 	    }
 	  }
 }

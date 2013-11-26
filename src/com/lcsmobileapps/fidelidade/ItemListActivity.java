@@ -1,4 +1,4 @@
-package com.lcsmobileapps.tvb;
+package com.lcsmobileapps.fidelidade;
 
 import android.content.Intent;
 import android.os.Bundle;

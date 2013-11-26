@@ -1,4 +1,4 @@
-package com.lcsmobileapps.tvb;
+package com.lcsmobileapps.fidelidade;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,8 +6,8 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.lcsmobileapps.tvb.adapter.VideosListAdapter;
-import com.lcsmobileapps.tvb.dummy.DummyContent;
+import com.lcsmobileapps.fidelidade.adapter.VideosListAdapter;
+import com.lcsmobileapps.fidelidade.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of Items. This fragment also supports
