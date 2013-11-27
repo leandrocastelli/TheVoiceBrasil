@@ -3,5 +3,17 @@
 
     <string name="app_name">Teste De Fidelidade</string>
     <string name="title_item_detail">Item Detail</string>
+    
+    
+    <string-array name="youtube_list">
+	    <item>"ot9Nc5oAIxA"</item>
+	    <item>"VbVAUMcNslc"</item>
+	    <item>"3hez2Mt1zmY"</item>
+	    <item>"HxClMAW6CWU"</item>
+	    <item>"fqFxfvvKBf0"</item>
+	    <item>"or4X1ZrIg30"</item>
+	    <item>"TFZGbKmEiNM"</item>
+	    <item>"glFHsUIyp2U"</item>
+    </string-array>
 
 </resources>

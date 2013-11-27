@@ -1,7 +1,12 @@
 package com.lcsmobileapps.fidelidade.adapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +15,12 @@ import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailLoader.ErrorReason;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.lcsmobileapps.fidelidade.R;
+import com.lcsmobileapps.fidelidade.helper.ImageHelper;
 
-public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailView.OnInitializedListener{
+public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailView.OnInitializedListener,YouTubeThumbnailLoader.OnThumbnailLoadedListener{
 
 	private Context ctx;
 	public final static String KEY = "AIzaSyCwKikt42UWCwSLAjiXqTFCo_DXhHVmaic";
@@ -22,6 +29,7 @@ public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailVi
 		TextView txtName;
 		
 	}
+	List<YouTubeThumbnailView> listThumbnail = new ArrayList<YouTubeThumbnailView>();
 	public VideosListAdapter (Context ctx) {
 		super();
 		this.ctx = ctx;
@@ -30,13 +38,12 @@ public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailVi
 	}
 	@Override
 	public int getCount() {
-//		return ninja.getNumSounds();
-		return 5;
+
+		return ((Activity)ctx).getResources().getStringArray(R.array.youtube_list).length;
 	}
 
 	@Override
 	public Object getItem(int position) {
-//		return ninja.getSound()+position;
 		return null;
 	}
 
@@ -44,6 +51,11 @@ public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailVi
 	public long getItemId(int arg0) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	public int getItemPosition (YouTubeThumbnailView currentThumbnail) {
+		
+		return listThumbnail.indexOf(currentThumbnail);
+		
 	}
 
 	@Override
@@ -54,19 +66,29 @@ public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailVi
 		if(convertView == null) {
 			convertView = layoutInflater.inflate(R.layout.list_item, null);
 			holder = new ViewHolder();
-			holder.txtName = (TextView)convertView.findViewById(R.id.video_title);
+//			holder.txtName = (TextView)convertView.findViewById(R.id.video_title);
 			
 			holder.imageView = (YouTubeThumbnailView) convertView.findViewById(R.id.thumbnail_frame);
+			holder.imageView.setDrawingCacheEnabled(true);
 			convertView.setTag(holder);
 		}
 		else {
 			holder = (ViewHolder) convertView.getTag();
+			
 		}
 		
-	//	ImageHelper.loadImage(holder.imageView, ninja.getIcon(), ctx);
-		holder.imageView.initialize("AIzaSyCwKikt42UWCwSLAjiXqTFCo_DXhHVmaic", this);
+		Bitmap bitmap = ImageHelper.getBitmapFromMemCache(((Activity)ctx).getResources().getStringArray(R.array.youtube_list)[position]);
 		
-		holder.txtName.setText("Testando "+position);
+		if (bitmap != null) {
+			
+			holder.imageView.setImageBitmap(bitmap);
+			
+		}
+		else {
+			holder.imageView.initialize("AIzaSyCwKikt42UWCwSLAjiXqTFCo_DXhHVmaic", this);
+			holder.imageView.setId(position+1);
+		}
+
 		
 		return convertView;
 	}
@@ -79,7 +101,23 @@ public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailVi
 	@Override
 	public void onInitializationSuccess(YouTubeThumbnailView thumbnailView,
 		      YouTubeThumbnailLoader thumbnailLoader) {
-		thumbnailLoader.setVideo("VbVAUMcNslc");
+//		int currentPosition = getItemPosition(thumbnailView);
+		thumbnailLoader.setOnThumbnailLoadedListener(this);
+		thumbnailLoader.setVideo(((Activity)ctx).getResources().getStringArray(R.array.youtube_list)[thumbnailView.getId()-1]);
+		
+		
+	}
+	@Override
+	public void onThumbnailError(YouTubeThumbnailView arg0, ErrorReason arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onThumbnailLoaded(YouTubeThumbnailView thumbnailView, String videoId) {
+		Bitmap bitmap = thumbnailView.getDrawingCache();
+		
+		
+		ImageHelper.addBitmapToMemoryCache(videoId, Bitmap.createBitmap(bitmap));
 		
 	}
 	

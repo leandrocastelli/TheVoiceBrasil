@@ -1,8 +1,13 @@
 package com.lcsmobileapps.fidelidade;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.util.LruCache;
+
+import com.lcsmobileapps.fidelidade.helper.ImageHelper;
 
 /**
  * An activity representing a list of Items. This activity has different
@@ -32,7 +37,16 @@ public class ItemListActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
-
+		final int maxMemory = (int)(Runtime.getRuntime().maxMemory() /1024);
+		
+		int cacheSize;
+		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+			cacheSize = maxMemory / 8;
+		}
+		else {
+			cacheSize = maxMemory / 4;
+		}
+		ImageHelper.mMemoryCache = new LruCache<String, Bitmap>(cacheSize);
 		if (findViewById(R.id.item_detail_container) != null) {
 			// The detail container view will be present only in the
 			// large-screen layouts (res/values-large and
@@ -45,6 +59,8 @@ public class ItemListActivity extends FragmentActivity implements
 			((ItemListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.item_list)).setActivateOnItemClick(true);
 		}
+		((ItemListFragment) getSupportFragmentManager().findFragmentById(
+				R.id.item_list)).getView().setBackgroundResource(R.drawable.background);
 
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
@@ -54,13 +70,13 @@ public class ItemListActivity extends FragmentActivity implements
 	 * the item with the given ID was selected.
 	 */
 	@Override
-	public void onItemSelected(String id) {
+	public void onItemSelected(int id) {
 		if (mTwoPane) {
 			// In two-pane mode, show the detail view in this activity by
 			// adding or replacing the detail fragment using a
 			// fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putString(ItemDetailFragment.ARG_ITEM_ID, id);
+			arguments.putInt(ItemDetailFragment.ARG_ITEM_ID, id);
 			ItemDetailFragment fragment = new ItemDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
@@ -74,4 +90,8 @@ public class ItemListActivity extends FragmentActivity implements
 			startActivity(detailIntent);
 		}
 	}
+	  @Override
+	  public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+	  }
 }

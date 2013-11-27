@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.lcsmobileapps.fidelidade.adapter.VideosListAdapter;
-import com.lcsmobileapps.fidelidade.dummy.DummyContent;
+
 
 /**
  * A list fragment representing a list of Items. This fragment also supports
@@ -46,7 +46,7 @@ public class ItemListFragment extends ListFragment {
 		/**
 		 * Callback for when an item has been selected.
 		 */
-		public void onItemSelected(String id);
+		public void onItemSelected(int id);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class ItemListFragment extends ListFragment {
 	 */
 	private static Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
-		public void onItemSelected(String id) {
+		public void onItemSelected(int id) {
 		}
 	};
 
@@ -75,6 +75,7 @@ public class ItemListFragment extends ListFragment {
 //				android.R.layout.simple_list_item_activated_1,
 //				android.R.id.text1, DummyContent.ITEMS));
 		setListAdapter(new VideosListAdapter(getActivity()));
+
 	}
 
 	@Override
@@ -117,7 +118,7 @@ public class ItemListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		mCallbacks.onItemSelected(position);
 	}
 
 	@Override
