@@ -73,6 +73,7 @@ public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailVi
 			convertView.setTag(holder);
 		}
 		else {
+			
 			holder = (ViewHolder) convertView.getTag();
 			
 		}

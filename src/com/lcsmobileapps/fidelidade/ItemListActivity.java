@@ -3,10 +3,15 @@ package com.lcsmobileapps.fidelidade;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.LruCache;
+import android.support.v7.app.ActionBarActivity;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 import com.lcsmobileapps.fidelidade.helper.ImageHelper;
 
 /**
@@ -24,7 +29,7 @@ import com.lcsmobileapps.fidelidade.helper.ImageHelper;
  * This activity also implements the required {@link ItemListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class ItemListActivity extends FragmentActivity implements
+public class ItemListActivity extends ActionBarActivity implements
 		ItemListFragment.Callbacks {
 
 	/**
@@ -40,12 +45,9 @@ public class ItemListActivity extends FragmentActivity implements
 		final int maxMemory = (int)(Runtime.getRuntime().maxMemory() /1024);
 		
 		int cacheSize;
-		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+		
 			cacheSize = maxMemory / 8;
-		}
-		else {
-			cacheSize = maxMemory / 4;
-		}
+		
 		ImageHelper.mMemoryCache = new LruCache<String, Bitmap>(cacheSize);
 		if (findViewById(R.id.item_detail_container) != null) {
 			// The detail container view will be present only in the
@@ -61,7 +63,16 @@ public class ItemListActivity extends FragmentActivity implements
 		}
 		((ItemListFragment) getSupportFragmentManager().findFragmentById(
 				R.id.item_list)).getView().setBackgroundResource(R.drawable.background);
-
+		AdRequest adRequest = new AdRequest();
+			adRequest.addTestDevice("5A873CD5069A96C1FCBBEB66EB7CBC5A");
+//			adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
+			AdView adView = (AdView)findViewById(R.id.ad);
+			
+			String locationProvider = LocationManager.NETWORK_PROVIDER;
+			LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+			Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+			adRequest.setLocation(lastKnownLocation);
+			adView.loadAd(adRequest);
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
 

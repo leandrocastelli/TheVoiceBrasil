@@ -3,8 +3,8 @@ package com.lcsmobileapps.fidelidade;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 /**
@@ -15,7 +15,7 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing more than
  * a {@link ItemDetailFragment}.
  */
-public class ItemDetailActivity extends FragmentActivity {
+public class ItemDetailActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,12 @@ public class ItemDetailActivity extends FragmentActivity {
 	  @Override
 	  public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
+	    if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+			getActionBar().show();
+		}
+		else {
+			getActionBar().hide();
+		}
 	   
 	  }
 }

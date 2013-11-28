@@ -1,14 +1,29 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_detail_container"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
+    
     tools:context=".ItemDetailActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame" 
+     xmlns:app="http://schemas.android.com/apk/lib/com.google.ads">
+	<com.google.ads.AdView
+        xmlns:googleads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/ad_video"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:adSize="BANNER"
+        android:gravity="top|center_horizontal"
+        app:adUnitId="@string/admob_id" >
+    </com.google.ads.AdView>
     <fragment
       android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
       android:id="@+id/youtube_fragment"
       android:layout_width="match_parent"
       android:layout_height="fill_parent"/>
-</FrameLayout>
+
+
+
+</LinearLayout>
 

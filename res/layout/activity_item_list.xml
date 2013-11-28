@@ -1,5 +1,10 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+       android:orientation="vertical" 
+    xmlns:app="http://schemas.android.com/apk/lib/com.google.ads">
+<fragment
     android:id="@+id/item_list"
     android:name="com.lcsmobileapps.fidelidade.ItemListFragment"
     android:layout_width="match_parent"
@@ -8,3 +13,14 @@
     tools:context=".ItemListActivity"
     tools:layout="@android:layout/list_content" />
 
+<com.google.ads.AdView
+    xmlns:googleads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:id="@+id/ad"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@id/item_list"
+    android:layout_alignParentBottom="true"
+    app:adSize="BANNER"
+    app:adUnitId="@string/admob_id" >
+</com.google.ads.AdView>
+</RelativeLayout>

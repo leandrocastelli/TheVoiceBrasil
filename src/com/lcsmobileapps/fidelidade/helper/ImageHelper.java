@@ -17,7 +17,7 @@ public class ImageHelper {
 	}
 
 	public static Bitmap getBitmapFromMemCache(String key) {
-		String eita = key;
+		
 	    return mMemoryCache.get(key);
 	}
 	
