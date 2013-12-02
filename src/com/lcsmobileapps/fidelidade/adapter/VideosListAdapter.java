@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailVi
 	public VideosListAdapter (Context ctx) {
 		super();
 		this.ctx = ctx;
+		
 		
 		
 	}
@@ -63,20 +65,21 @@ public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailVi
 		ViewHolder holder = null;
 		LayoutInflater layoutInflater = (LayoutInflater) ctx.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		
-		if(convertView == null) {
+//		if(convertView == null) {
 			convertView = layoutInflater.inflate(R.layout.list_item, null);
 			holder = new ViewHolder();
 //			holder.txtName = (TextView)convertView.findViewById(R.id.video_title);
 			
 			holder.imageView = (YouTubeThumbnailView) convertView.findViewById(R.id.thumbnail_frame);
 			holder.imageView.setDrawingCacheEnabled(true);
+		
 			convertView.setTag(holder);
-		}
-		else {
-			
-			holder = (ViewHolder) convertView.getTag();
-			
-		}
+//		}
+//		else {
+//			
+//			holder = (ViewHolder) convertView.getTag();
+//			
+//		}
 		
 		Bitmap bitmap = ImageHelper.getBitmapFromMemCache(((Activity)ctx).getResources().getStringArray(R.array.youtube_list)[position]);
 		
@@ -109,8 +112,9 @@ public class VideosListAdapter extends BaseAdapter implements YouTubeThumbnailVi
 		
 	}
 	@Override
-	public void onThumbnailError(YouTubeThumbnailView arg0, ErrorReason arg1) {
-		// TODO Auto-generated method stub
+	public void onThumbnailError(YouTubeThumbnailView thumbnailView, ErrorReason arg1) {
+		
+		thumbnailView.initialize(KEY, this);
 		
 	}
 	@Override

@@ -287,6 +287,7 @@ int id shortcut 0x7f05002c
 int id showCustom 0x7f050007
 int id showHome 0x7f050004
 int id showTitle 0x7f050006
+int id splash 0x7f050048
 int id split_action_bar 0x7f05001c
 int id submit_area 0x7f05003f
 int id tabMode 0x7f050002
@@ -328,7 +329,8 @@ int layout activity_item_list 0x7f030019
 int layout activity_item_twopane 0x7f03001a
 int layout fragment_item_detail 0x7f03001b
 int layout list_item 0x7f03001c
-int layout support_simple_spinner_dropdown_item 0x7f03001d
+int layout splash_screen 0x7f03001d
+int layout support_simple_spinner_dropdown_item 0x7f03001e
 int string abc_action_bar_home_description 0x7f0a0001
 int string abc_action_bar_up_description 0x7f0a0002
 int string abc_action_menu_overflow_description 0x7f0a0003

@@ -23,7 +23,7 @@ public class ItemDetailActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_item_detail);
 
 		// Show the Up button in the action bar.
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// savedInstanceState is non-null when there is fragment state
 		// saved from previous configurations of this activity
@@ -69,10 +69,10 @@ public class ItemDetailActivity extends ActionBarActivity {
 	  public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
 	    if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-			getActionBar().show();
+			getSupportActionBar().show();
 		}
 		else {
-			getActionBar().hide();
+			getSupportActionBar().hide();
 		}
 	   
 	  }

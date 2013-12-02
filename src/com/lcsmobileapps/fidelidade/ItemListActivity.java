@@ -3,10 +3,12 @@ package com.lcsmobileapps.fidelidade;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.ActionBarActivity;
 
@@ -36,13 +38,17 @@ public class ItemListActivity extends ActionBarActivity implements
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
 	 * device.
 	 */
-	private boolean mTwoPane;
+	private static boolean mTwoPane;
 
+	public static boolean isTwoPane() {
+		
+		return mTwoPane;
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
-		final int maxMemory = (int)(Runtime.getRuntime().maxMemory() /1024);
+final int maxMemory = (int)(Runtime.getRuntime().maxMemory() /1024);
 		
 		int cacheSize;
 		
@@ -61,8 +67,12 @@ public class ItemListActivity extends ActionBarActivity implements
 			((ItemListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.item_list)).setActivateOnItemClick(true);
 		}
-		((ItemListFragment) getSupportFragmentManager().findFragmentById(
-				R.id.item_list)).getView().setBackgroundResource(R.drawable.background);
+		ListFragment listFragment = (ListFragment)getSupportFragmentManager().findFragmentById(
+				R.id.item_list);
+		ImageHelper.loadImage(listFragment.getListView(), R.drawable.background, this);
+		listFragment.getListView().setBackgroundColor(Color.TRANSPARENT);
+		
+		
 		AdRequest adRequest = new AdRequest();
 			adRequest.addTestDevice("5A873CD5069A96C1FCBBEB66EB7CBC5A");
 //			adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
@@ -72,7 +82,8 @@ public class ItemListActivity extends ActionBarActivity implements
 			LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
 			Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
 			adRequest.setLocation(lastKnownLocation);
-			adView.loadAd(adRequest);
+			if(!mTwoPane)
+				adView.loadAd(adRequest);
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
 
@@ -88,10 +99,19 @@ public class ItemListActivity extends ActionBarActivity implements
 			// fragment transaction.
 			Bundle arguments = new Bundle();
 			arguments.putInt(ItemDetailFragment.ARG_ITEM_ID, id);
-			ItemDetailFragment fragment = new ItemDetailFragment();
-			fragment.setArguments(arguments);
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.item_detail_container, fragment).commit();
+			Fragment oldFragment = getSupportFragmentManager().findFragmentByTag("DetailFragment");
+			
+			if (oldFragment!=null) {
+
+				((ItemDetailFragment)oldFragment).changeVideo(id);
+			}
+			else {
+				ItemDetailFragment fragment = new ItemDetailFragment();
+				
+				fragment.setArguments(arguments);
+				getSupportFragmentManager().beginTransaction()
+						.add(R.id.item_detail_container, fragment,"DetailFragment").commit();
+			}
 
 		} else {
 			// In single-pane mode, simply start the detail activity

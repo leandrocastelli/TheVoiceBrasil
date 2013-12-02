@@ -5,10 +5,11 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:baselineAligned="false"
-    android:divider="?android:attr/dividerHorizontal"
+   
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context=".ItemListActivity" >
+    tools:context=".ItemListActivity" 
+    xmlns:app="http://schemas.android.com/apk/lib/com.google.ads">
 
     <!--
     This layout is a two-pane layout for the Items
@@ -29,10 +30,31 @@
         android:layout_weight="1"
         tools:layout="@android:layout/list_content" />
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/item_detail_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3" />
+        android:layout_weight="3" 
+         android:orientation="vertical"
+         >
+        
+   <com.google.ads.AdView
+        xmlns:googleads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/ad_video"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:adSize="BANNER"
+        android:gravity="top|center_horizontal"
+        app:adUnitId="@string/admob_id" >
+        
+    </com.google.ads.AdView>
+     <!-- 
+         <fragment
+      android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
+      android:id="@+id/youtube_fragment"
+      android:layout_width="match_parent"
+      android:layout_height="fill_parent"/>
+       -->
+    </LinearLayout>
 
 </LinearLayout>

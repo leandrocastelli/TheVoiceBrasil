@@ -75,6 +75,7 @@ public class ItemListFragment extends ListFragment {
 //				android.R.layout.simple_list_item_activated_1,
 //				android.R.id.text1, DummyContent.ITEMS));
 		setListAdapter(new VideosListAdapter(getActivity()));
+		
 
 	}
 
