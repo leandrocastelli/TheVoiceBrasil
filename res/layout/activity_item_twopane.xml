@@ -38,16 +38,14 @@
          android:orientation="vertical"
          >
         
-   <com.google.ads.AdView
-        xmlns:googleads="http://schemas.android.com/apk/lib/com.google.ads"
+   <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ad_video"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        app:adSize="BANNER"
+        ads:adSize="BANNER"
         android:gravity="top|center_horizontal"
-        app:adUnitId="@string/admob_id" >
-        
-    </com.google.ads.AdView>
+        ads:adUnitId="@string/admob_id" />
      <!-- 
          <fragment
       android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"

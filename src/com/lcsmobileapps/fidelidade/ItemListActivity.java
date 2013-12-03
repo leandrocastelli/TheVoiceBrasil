@@ -1,19 +1,24 @@
 package com.lcsmobileapps.fidelidade;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.ActionBarActivity;
+import android.widget.ArrayAdapter;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.auth.GoogleAuthUtil;
 import com.lcsmobileapps.fidelidade.helper.ImageHelper;
 
 /**
@@ -73,20 +78,38 @@ final int maxMemory = (int)(Runtime.getRuntime().maxMemory() /1024);
 		listFragment.getListView().setBackgroundColor(Color.TRANSPARENT);
 		
 		
-		AdRequest adRequest = new AdRequest();
-			adRequest.addTestDevice("5A873CD5069A96C1FCBBEB66EB7CBC5A");
+		AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+		adRequestBuilder.addTestDevice("5A873CD5069A96C1FCBBEB66EB7CBC5A");
 //			adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
 			AdView adView = (AdView)findViewById(R.id.ad);
 			
-			String locationProvider = LocationManager.NETWORK_PROVIDER;
-			LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
-			Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-			adRequest.setLocation(lastKnownLocation);
+			
 			if(!mTwoPane)
-				adView.loadAd(adRequest);
-		// TODO: If exposing deep links into your app, handle intents here.
+				adView.loadAd(adRequestBuilder.build());
+	
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setNegativeButton(getString(android.R.string.cancel), new OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					arg0.dismiss();
+					
+				}
+			});
+			String[] accounts = getAccountNames();
+			builder.setAdapter(new ArrayAdapter<String>(this,android.R.layout.select_dialog_item, android.R.id.text1,accounts) ,null);
+			builder.show();
 	}
-
+	private String[] getAccountNames() {
+		AccountManager accountManager = AccountManager.get(this);
+	    Account[] accounts = accountManager.getAccountsByType(
+	            GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
+	    String[] names = new String[accounts.length];
+	    for (int i = 0; i < names.length; i++) {
+	        names[i] = accounts[i].name;
+	    }
+	    return names;
+	}
 	/**
 	 * Callback method from {@link ItemListFragment.Callbacks} indicating that
 	 * the item with the given ID was selected.

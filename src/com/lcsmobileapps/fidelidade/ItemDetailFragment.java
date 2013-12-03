@@ -1,18 +1,14 @@
 package com.lcsmobileapps.fidelidade;
 
 import static com.lcsmobileapps.fidelidade.adapter.VideosListAdapter.KEY;
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayer.OnInitializedListener;
@@ -56,16 +52,13 @@ public class ItemDetailFragment extends Fragment implements OnInitializedListene
 			YouTubePlayerSupportFragment youTubePlayerFragment =
 					(YouTubePlayerSupportFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
 			youTubePlayerFragment.initialize(KEY, this);
-		      AdRequest adRequest = new AdRequest();
+		      AdRequest.Builder adRequest = new AdRequest.Builder();
 				adRequest.addTestDevice("5A873CD5069A96C1FCBBEB66EB7CBC5A");
 //				adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
 				AdView adView = (AdView)getActivity().findViewById(R.id.ad_video);
 				
-				String locationProvider = LocationManager.NETWORK_PROVIDER;
-				LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-				Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-				adRequest.setLocation(lastKnownLocation);
-				adView.loadAd(adRequest);
+				
+				adView.loadAd(adRequest.build());
 			
 		}
 	}
@@ -96,16 +89,13 @@ public class ItemDetailFragment extends Fragment implements OnInitializedListene
 			YouTubePlayerSupportFragment youTubePlayerFragment =
 					(YouTubePlayerSupportFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
 			youTubePlayerFragment.initialize(KEY, this);
-			AdRequest adRequest = new AdRequest();
+			AdRequest.Builder adRequest = new AdRequest.Builder();
 			adRequest.addTestDevice("5A873CD5069A96C1FCBBEB66EB7CBC5A");
-			//			adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
+//			adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
 			AdView adView = (AdView)getActivity().findViewById(R.id.ad_video);
-
-			String locationProvider = LocationManager.NETWORK_PROVIDER;
-			LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-			Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-			adRequest.setLocation(lastKnownLocation);
-			adView.loadAd(adRequest);
+			
+			
+			adView.loadAd(adRequest.build());
 			return view;
 		}
 		else {
